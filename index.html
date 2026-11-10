@@ -1,0 +1,224 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Tomato Zombie Survival - a 2D browser survival game">
+  <title>Tomato Zombie Survival</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="site-header">
+    <div class="brand">
+      🍅 Tomato Zombie Survival
+      <div class="small">Shoot. Survive. Solve to live again.</div>
+    </div>
+    <div class="small">ARCADE SURVIVAL</div>
+  </header>
+
+  <section id="loginPage" class="card auth page">
+    <div class="auth-icon">🍅</div>
+    <h1>Login</h1>
+    <p class="muted">Survive the zombie horde.</p>
+
+    <form id="loginForm" class="auth-form" novalidate>
+      <label>
+        Email address
+        <input id="loginEmail" type="email" autocomplete="username"
+          placeholder="you@example.com" required>
+      </label>
+
+      <label>
+        Password
+        <input id="loginPassword" type="password"
+          autocomplete="current-password"
+          placeholder="Enter your password" required>
+      </label>
+
+      <button type="submit">Login →</button>
+      <div id="loginErr" class="err" aria-live="polite"></div>
+
+      <p class="small centered">
+        No account?
+        <a href="#signup" class="link">Create an account</a>
+      </p>
+    </form>
+  </section>
+
+  <section id="signupPage" class="card auth page hidden">
+    <div class="auth-icon">🍅</div>
+    <h1>Create account</h1>
+
+    <form id="signupForm" class="auth-form" novalidate>
+      <label>
+        Player name
+        <input id="regName" maxlength="18" autocomplete="name"
+          placeholder="Your display name" required>
+      </label>
+
+      <label>
+        Email address
+        <input id="regEmail" type="email" autocomplete="email"
+          placeholder="you@example.com" required>
+      </label>
+
+      <label>
+        Password
+        <input id="regPass" type="password" autocomplete="new-password"
+          placeholder="At least 6 characters" required>
+      </label>
+
+      <label>
+        Confirm password
+        <input id="regPass2" type="password" autocomplete="new-password"
+          placeholder="Re-enter your password" required>
+      </label>
+
+      <button type="submit">Create account →</button>
+      <div id="signupErr" class="err" aria-live="polite"></div>
+
+      <p class="small centered">
+        Already registered?
+        <a href="#login" class="link">Back to login</a>
+      </p>
+    </form>
+  </section>
+
+  <section id="gamePage" class="page hidden">
+    <div class="layout">
+      <main>
+        <div class="hud">
+          <span class="pill">👤 <b id="hName">Player</b></span>
+          <span class="pill">Score <b id="hScore">0</b></span>
+          <span class="pill hearts" id="hLives" title="Lives">♥♥♥</span>
+          <span class="pill">Wave <b id="hWave">1</b></span>
+          <span class="pill">Kills <b id="hKills">0</b></span>
+          <button id="pauseBtn" class="secondary" type="button">⏸ Pause</button>
+        </div>
+
+        <div class="stage">
+          <canvas id="cv" width="800" height="520"
+            aria-label="Game arena"></canvas>
+
+          <div id="menuOv" class="ov">
+            <div class="modal">
+              <div class="modal-icon">🍅🔫</div>
+              <h2>Ready to survive?</h2>
+              <p class="small">
+                <b>WASD / Arrows</b> move ·
+                <b>Mouse</b> aim ·
+                <b>Click / Space</b> shoot ·
+                <b>P / Esc</b> pause
+                <br>
+                Lose a life and solve a tomato puzzle to win it back!
+              </p>
+              <button id="startBtn" class="yellow" type="button">
+                Start survival
+              </button>
+            </div>
+          </div>
+
+          <div id="pauseOv" class="ov hidden">
+            <div class="modal">
+              <h2>⏸ Paused</h2>
+              <p class="muted">Zombies are frozen. Take a breath.</p>
+              <button id="resumeBtn" class="yellow" type="button">
+                Resume
+              </button>
+            </div>
+          </div>
+
+          <div id="puzzleOv" class="ov hidden">
+            <div class="modal">
+              <h2>🍅 Earn an Extra Life!</h2>
+              <div id="pzLives" class="small"></div>
+              <div id="pzLoad" class="muted loading">Loading puzzle…</div>
+
+              <div id="pzBody" class="hidden">
+                <p class="small">What is the value of one 🍅?</p>
+                <div id="pzEq" class="eq"></div>
+
+                <form id="pzForm">
+                  <input id="pzIn" type="number" step="1"
+                    inputmode="numeric" placeholder="Value of one tomato"
+                    aria-label="Your answer">
+
+                  <div class="msg" id="pzMsg" aria-live="polite"></div>
+
+                  <div class="button-row">
+                    <button id="pzSubmit" type="submit" class="yellow">
+                      Check answer
+                    </button>
+                    <button id="pzSkip" type="button" class="secondary">
+                      Skip challenge
+                    </button>
+                    <button id="pzCont" type="button" class="yellow hidden">
+                      Continue →
+                    </button>
+                  </div>
+                </form>
+
+                <div id="pzSrc" class="small source"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="overOv" class="ov hidden">
+            <div class="modal">
+              <div class="modal-icon">💀</div>
+              <h2>Game over</h2>
+              <div class="score"><span id="goScore">0</span> pts</div>
+              <p class="muted">
+                Wave <b id="goWave">1</b> ·
+                <b id="goKills">0</b> zombies defeated
+              </p>
+
+              <div class="button-row">
+                <button id="againBtn" class="yellow" type="button">
+                  Play again
+                </button>
+                <button id="dashBtn" class="secondary" type="button">
+                  Dashboard
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside>
+        <section class="card side">
+          <h3>👤 Player profile</h3>
+          <b id="pName">Player</b>
+          <div class="score"><span id="pScore">0</span> pts</div>
+          <div class="small">
+            Personal best: <b id="pBest">0</b>
+          </div>
+          <div class="profile-actions">
+            <button id="signOut" class="secondary compact" type="button">
+              Sign out
+            </button>
+          </div>
+        </section>
+
+        <section class="card side">
+          <h3>🏆 Leaderboard</h3>
+          <ol id="board">
+            <li>No scores yet</li>
+          </ol>
+          <div class="small">Scores are stored in MySQL.</div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <p class="small footer-note">
+    Tomato Zombie Survival · HTML, CSS, JavaScript, PHP and MySQL
+  </p>
+</div>
+
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
