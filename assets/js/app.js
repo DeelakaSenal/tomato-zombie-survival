@@ -12,8 +12,6 @@ import { setCurrentPlayer, showMenu } from './game.js';
 
 const $ = (id) => document.getElementById(id);
 
-const FRONTEND_ONLY = true;
-
 let currentPlayer = null;
 
 function showPage(page) {
@@ -127,13 +125,6 @@ function setPlayer(player) {
 }
 
 async function restoreSession() {
-  if (FRONTEND_ONLY) {
-    setPlayer({ name: 'Demo Player' });
-    location.hash = 'game';
-    route();
-    return;
-  }
-
   try {
     const result = await getCurrentPlayer();
 
@@ -185,7 +176,7 @@ async function refreshLeaderboard() {
         const item = document.createElement('li');
 
         item.textContent =
-          `${player.player_name} — ${player.best_score} (W${player.best_wave})`;
+          `${player.name} — ${player.best_score} (W${player.highest_wave})`;
 
         board.appendChild(item);
       });

@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS tomato_zombie_survival
+	CHARACTER SET utf8mb4
+	COLLATE utf8mb4_unicode_ci;
+
+USE tomato_zombie_survival;
+
+CREATE TABLE IF NOT EXISTS players (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	email VARCHAR(150) NOT NULL UNIQUE,
+	password_hash VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS scores (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	player_id INT UNSIGNED NOT NULL,
+	score INT UNSIGNED NOT NULL DEFAULT 0,
+	wave INT UNSIGNED NOT NULL DEFAULT 1,
+	duration_seconds INT UNSIGNED NOT NULL DEFAULT 0,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+	CONSTRAINT fk_scores_player
+		FOREIGN KEY (player_id)
+		REFERENCES players(id)
+		ON DELETE CASCADE,
+
+	INDEX idx_scores_player (player_id),
+	INDEX idx_scores_score (score)
+);

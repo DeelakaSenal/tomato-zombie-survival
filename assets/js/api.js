@@ -21,7 +21,9 @@ export async function apiRequest(endpoint, options = {}) {
     : {};
 
   if (!response.ok) {
-    throw new Error(data.error || `Request failed (${response.status})`);
+    throw new Error(
+      data.message || data.error || `Request failed (${response.status})`
+    );
   }
 
   return data;
