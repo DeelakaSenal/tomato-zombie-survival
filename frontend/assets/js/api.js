@@ -2,7 +2,7 @@
 // Centralised PHP API client.
 // All requests include the PHP session cookie.
 
-export const API_BASE = 'backend/api';
+export const API_BASE = '../backend/api';
 
 export async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE}/${endpoint}`, {

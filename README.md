@@ -74,7 +74,7 @@ The player controls a tomato character, shoots approaching zombies, survives inc
 
 7. Open the application:
 
-   `http://127.0.0.1:8000`
+   `http://127.0.0.1:8000/frontend/`
 
 ## Game Controls
 
@@ -95,7 +95,7 @@ The player controls a tomato character, shoots approaching zombies, survives inc
 The game responds to keyboard, mouse, button and form events through JavaScript event listeners.
 
 ### 2. Interoperability
-The frontend communicates with the PHP backend through HTTP requests and JSON. The puzzle module also consumes the external Banana API at `https://marcconrad.com/uob/banana/api.php?out=json&base64=yes`. Banana returns a Base64-encoded PNG in `question` and the numeric answer in `solution`; `assets/js/puzzles.js` maps those fields to the game's internal puzzle format. The documentation is available at https://marcconrad.com/uob/banana/doc.php.
+The frontend communicates with the PHP backend through HTTP requests and JSON. The puzzle module also consumes the external Banana API at `https://marcconrad.com/uob/banana/api.php?out=json&base64=yes`. Banana returns a Base64-encoded PNG in `question` and the numeric answer in `solution`; `frontend/assets/js/puzzles.js` maps those fields to the game's internal puzzle format. The documentation is available at https://marcconrad.com/uob/banana/doc.php.
 
 ### 3. Virtual Identity
 Players can register, log in and maintain an authenticated session.
@@ -110,17 +110,18 @@ Git is used to track development progress through meaningful commits and GitHub 
 
 ```text
 tomato-zombie-survival/
-├── index.html
+├── frontend/
+│   ├── index.html
+│   └── assets/
+│       ├── css/
+│       │   └── styles.css
+│       └── js/
+│           ├── api.js
+│           ├── app.js
+│           ├── events.js
+│           ├── game.js
+│           └── puzzles.js
 ├── README.md
-├── assets/
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       ├── api.js
-│       ├── app.js
-│       ├── events.js
-│       ├── game.js
-│       └── puzzles.js
 ├── backend/
 │   ├── config/
 │   ├── api/
@@ -135,6 +136,6 @@ The Banana API integration uses the documented JSON/Base64 endpoint and response
 
 ## Code and External Sources
 
-The game logic and integration code in this repository was written for this project. GitHub Copilot was used as an AI coding assistant to help implement and explain the Banana API response mapping; the code was reviewed, tested and integrated by the student. The Banana API is an external service provided by Marc Conrad and is consumed according to its documentation. The response mapping is documented in `assets/js/puzzles.js`. No third-party source code is copied into this repository.
+The game logic and integration code in this repository was written for this project. GitHub Copilot was used as an AI coding assistant to help implement and explain the Banana API response mapping; the code was reviewed, tested and integrated by the student. The Banana API is an external service provided by Marc Conrad and is consumed according to its documentation. The response mapping is documented in `frontend/assets/js/puzzles.js`. No third-party source code is copied into this repository.
 
 This project is intended for educational purposes.
