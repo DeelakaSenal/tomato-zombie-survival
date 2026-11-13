@@ -18,7 +18,7 @@ The player controls a tomato character, shoots approaching zombies, survives inc
 - Personal best score
 - Individual score tracking
 - Leaderboard
-- External Banana API integration (subject to API documentation)
+- External Banana API integration for image-based puzzles
 
 ## Technologies
 
@@ -95,7 +95,7 @@ The player controls a tomato character, shoots approaching zombies, survives inc
 The game responds to keyboard, mouse, button and form events through JavaScript event listeners.
 
 ### 2. Interoperability
-The frontend communicates with the PHP backend through HTTP requests and JSON. The puzzle module is designed to communicate with the external Banana API.
+The frontend communicates with the PHP backend through HTTP requests and JSON. The puzzle module also consumes the external Banana API at `https://marcconrad.com/uob/banana/api.php?out=json&base64=yes`. Banana returns a Base64-encoded PNG in `question` and the numeric answer in `solution`; `assets/js/puzzles.js` maps those fields to the game's internal puzzle format. The documentation is available at https://marcconrad.com/uob/banana/doc.php.
 
 ### 3. Virtual Identity
 Players can register, log in and maintain an authenticated session.
@@ -131,6 +131,10 @@ tomato-zombie-survival/
 
 ## Notes
 
-The Banana API integration must be configured using its verified API endpoint and response format. Local fallback puzzles are used when the external service is unavailable.
+The Banana API integration uses the documented JSON/Base64 endpoint and response format. Local fallback puzzles are used when the external service is unavailable.
+
+## Code and External Sources
+
+The game logic and integration code in this repository was written for this project. GitHub Copilot was used as an AI coding assistant to help implement and explain the Banana API response mapping; the code was reviewed, tested and integrated by the student. The Banana API is an external service provided by Marc Conrad and is consumed according to its documentation. The response mapping is documented in `assets/js/puzzles.js`. No third-party source code is copied into this repository.
 
 This project is intended for educational purposes.

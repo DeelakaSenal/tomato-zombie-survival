@@ -2,35 +2,30 @@
 /*
  * Puzzle interoperability adapter.
  *
- * Set the Banana API URL only after checking its actual documentation.
- * Do not guess the endpoint or response properties.
+ * Banana API documentation:
+ * https://marcconrad.com/uob/banana/doc.php
+ * The API returns { question: Base64 PNG, solution: number } when
+ * out=json&base64=yes is used.
  */
 
-const BANANA_API_URL = '';
+const BANANA_API_URL =
+  'https://marcconrad.com/uob/banana/api.php?out=json&base64=yes';
 
 const fallbackPuzzles = [
-  { question: '🍅 + 🍅 = 20', answer: 10 },
-  { question: '🍅 + 🍅 + 🍅 = 24', answer: 8 },
-  { question: '🍅 × 4 = 36', answer: 9 },
-  { question: '(🍅 + 3) × 2 = 26', answer: 10 },
-  { question: '(🍅 × 3) - 7 = 32', answer: 13 },
-  { question: '🍅 × 🍅 = 49', answer: 7 },
-  { question: '🍅 + 🍅 + 5 = 31', answer: 13 },
-  { question: '(🍅 - 2) × 5 = 35', answer: 9 }
+  { question: '� + � = 20', answer: 10 },
+  { question: '� + � + � = 24', answer: 8 },
+  { question: '� × 4 = 36', answer: 9 },
+  { question: '(� + 3) × 2 = 26', answer: 10 },
+  { question: '(� × 3) - 7 = 32', answer: 13 },
+  { question: '� × � = 49', answer: 7 },
+  { question: '� + � + 5 = 31', answer: 13 },
+  { question: '(� - 2) × 5 = 35', answer: 9 }
 ];
 
 function normalize(data) {
-  /*
-   * Update this mapping after checking the actual
-   * Banana API response structure.
-   *
-   * Expected internal format:
-   * { question: string, answer: number }
-   */
-
   if (
     typeof data.question !== 'string' ||
-    !Number.isFinite(Number(data.answer))
+    !Number.isFinite(Number(data.solution))
   ) {
     throw new Error(
       'Unexpected Banana API response. Update the response mapping.'
@@ -38,8 +33,9 @@ function normalize(data) {
   }
 
   return {
-    question: data.question,
-    answer: Number(data.answer),
+    image: `data:image/png;base64,${data.question}`,
+    question: '',
+    answer: Number(data.solution),
     source: 'Banana API'
   };
 }
@@ -69,7 +65,13 @@ export async function getPuzzle() {
 
       const data = await response.json();
 
-      return normalize(data);
+      const puzzle = normalize(data);
+
+      window.dispatchEvent(new CustomEvent('puzzle:loaded', {
+        detail: { source: puzzle.source }
+      }));
+
+      return puzzle;
 
     } catch (error) {
       console.warn(
@@ -89,6 +91,7 @@ export async function getPuzzle() {
 
   return {
     ...puzzle,
+    image: null,
     source: 'Local fallback puzzle'
   };
 }

@@ -259,7 +259,9 @@ async function openPuzzle() {
 
     gameState.puzzle = puzzle;
 
-    $('pzEq').textContent = puzzle.question;
+    $('pzImage').classList.toggle('hidden', !puzzle.image);
+    $('pzImage').src = puzzle.image || '';
+    $('pzEq').textContent = puzzle.question || '';
     $('pzSrc').textContent = `Source: ${puzzle.source}`;
 
     $('pzIn').value = '';
@@ -277,6 +279,8 @@ async function openPuzzle() {
 
     gameState.puzzle = null;
 
+    $('pzImage').classList.add('hidden');
+    $('pzImage').removeAttribute('src');
     $('pzEq').textContent = 'Puzzle unavailable';
     $('pzSrc').textContent = 'Please skip and continue.';
 
