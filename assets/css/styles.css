@@ -216,6 +216,8 @@ canvas {
   border-radius: 18px;
   padding: 22px;
   max-width: 430px;
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
   width: 100%;
   animation: pop .25s ease;
 }
@@ -248,7 +250,7 @@ canvas {
 .puzzle-image {
   display: block;
   width: min(100%, 420px);
-  max-height: 260px;
+  max-height: 190px;
   object-fit: contain;
   margin: 14px auto;
   border-radius: 8px;

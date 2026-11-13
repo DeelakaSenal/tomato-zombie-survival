@@ -254,6 +254,11 @@ async function openPuzzle() {
   $('pzLoad').classList.remove('hidden');
   $('pzBody').classList.add('hidden');
 
+  $('puzzleOv').querySelector('h2').textContent =
+    '\u{1F34C} Earn an Extra Life!';
+  $('puzzleOv').querySelector('p.small').textContent =
+    'What is the value of one \u{1F34C}?';
+
   try {
     const puzzle = await getPuzzle();
 

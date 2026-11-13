@@ -22,6 +22,17 @@ const fallbackPuzzles = [
   { question: '(� - 2) × 5 = 35', answer: 9 }
 ];
 
+const bananaFallbackPuzzles = [
+  { question: '\u{1F34C} + \u{1F34C} = 20', answer: 10 },
+  { question: '\u{1F34C} + \u{1F34C} + \u{1F34C} = 24', answer: 8 },
+  { question: '\u{1F34C} * 4 = 36', answer: 9 },
+  { question: '(\u{1F34C} + 3) * 2 = 26', answer: 10 },
+  { question: '(\u{1F34C} * 3) - 7 = 32', answer: 13 },
+  { question: '\u{1F34C} * \u{1F34C} = 49', answer: 7 },
+  { question: '\u{1F34C} + \u{1F34C} + 5 = 31', answer: 13 },
+  { question: '(\u{1F34C} - 2) * 5 = 35', answer: 9 }
+];
+
 function normalize(data) {
   if (
     typeof data.question !== 'string' ||
@@ -85,8 +96,8 @@ export async function getPuzzle() {
   }
 
   const puzzle =
-    fallbackPuzzles[
-      Math.floor(Math.random() * fallbackPuzzles.length)
+    bananaFallbackPuzzles[
+      Math.floor(Math.random() * bananaFallbackPuzzles.length)
     ];
 
   return {
