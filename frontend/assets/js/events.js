@@ -18,6 +18,10 @@ const $ = (id) => document.getElementById(id);
 
 export function bindGameEvents() {
   document.addEventListener('keydown', (event) => {
+    if (typeof event.key !== 'string') {
+      return;
+    }
+
     if (
       event.target instanceof HTMLElement &&
       ['INPUT', 'TEXTAREA'].includes(event.target.tagName)
@@ -50,6 +54,10 @@ export function bindGameEvents() {
   });
 
   document.addEventListener('keyup', (event) => {
+    if (typeof event.key !== 'string') {
+      return;
+    }
+
     keys[event.key.toLowerCase()] = false;
   });
 
