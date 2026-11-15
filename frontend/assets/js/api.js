@@ -16,9 +16,11 @@ export async function apiRequest(endpoint, options = {}) {
 
   const contentType = response.headers.get('content-type') || '';
 
-  const data = contentType.includes('application/json')
-    ? await response.json()
-    : {};
+  if (!contentType.includes('application/json')) {
+    throw new Error('The server returned an unexpected response. Start PHP from the project root.');
+  }
+
+  const data = await response.json();
 
   if (!response.ok) {
     throw new Error(
