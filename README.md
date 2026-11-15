@@ -27,14 +27,14 @@ The player controls a tomato character, shoots approaching zombies, survives inc
 | Frontend | HTML5, CSS3, JavaScript |
 | Game | HTML Canvas |
 | Backend | PHP |
-| Database | MySQL |
+| Database | SQLite |
 | API Communication | REST API, Fetch API, JSON |
 | Version Control | Git and GitHub |
 
 ## Requirements
 
 - PHP 8.1 or later
-- MySQL 8 or compatible MariaDB
+- SQLite 3 through PHP's PDO SQLite extension
 - A modern web browser
 - Git
 - VS Code (recommended)
@@ -54,25 +54,19 @@ The player controls a tomato character, shoots approaching zombies, survives inc
    cd tomato-zombie-survival
    ```
 
-3. Start your MySQL server.
-
-4. Import the database schema:
+3. The SQLite database is created automatically on the first API request. To initialize it manually:
 
    ```bash
-   mysql -u root -p < database/schema.sql
+   sqlite3 database/tomato_zombie_survival.sqlite < database/schema.sql
    ```
 
-5. Configure the database credentials in:
-
-   `backend/config/database.php`
-
-6. Start the PHP development server:
+4. Start the PHP development server from the project root:
 
    ```bash
    php -S 127.0.0.1:8000
    ```
 
-7. Open the application:
+5. Open the application:
 
    `http://127.0.0.1:8000/frontend/`
 
